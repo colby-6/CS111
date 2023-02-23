@@ -30,7 +30,7 @@ def choose(paragraphs, select, k):
     ''
     """
     # BEGIN PROBLEM 1
-    selection = [new_paragraph for new_paragraph in paragraphs if select(i) == True]
+    selection = [new_paragraph for new_paragraph in paragraphs if select(new_paragraph) == True]
     if len(selection) > k:
         return selection[k]
     else: return ''
@@ -53,7 +53,9 @@ def about(topic):
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
     def init(new_paragraph):
-        for word in new_paragraph.
+        split_text = split(lower(remove_punctuation(new_paragraph)))
+        return any([x in split_text for x in topic])
+    return init
 
     # END PROBLEM 2
 
@@ -102,7 +104,7 @@ def wpm(typed, elapsed):
     """
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    return len(typed)*12/elapsed
     # END PROBLEM 4
 
 
