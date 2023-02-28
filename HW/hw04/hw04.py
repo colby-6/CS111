@@ -162,6 +162,8 @@ def totals_tree(m):
     if is_planet(m):
         return tree(size(m))
     else: 
+        lefty, righty = lefts_and_rights(m)
+        return tree(total_weight(m), [totals_tree(end(lefty)), totals_tree(end(righty))])
 
 
 
@@ -194,7 +196,7 @@ def replace_loki_at_leaf(t, lokis_replacement):
     >>> laerad == yggdrasil # Make sure original tree is unmodified
     True
     """
-    "*** YOUR CODE HERE ***"
+    
 
 
 def has_path(t, word):
