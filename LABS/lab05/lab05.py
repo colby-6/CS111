@@ -66,7 +66,7 @@ def distance(city_a, city_b):
     >>> distance(city_c, city_d)
     5.0
     """
-    "*** YOUR CODE HERE ***"
+    return sqrt((get_lat(city_a) - get_lat(city_b))**2 +(get_lon(city_a) - get_lon(city_b))**2)
 
 
 # Q4: Closer City
@@ -85,7 +85,12 @@ def closer_city(lat, lon, city_a, city_b):
     >>> closer_city(41.29, 174.78, bucharest, vienna)
     'Bucharest'
     """
-    "*** YOUR CODE HERE ***"
+    temp = make_city('coords', lat, lon)
+    if distance(temp, city_a) < distance(temp, city_b):
+        return get_name(city_a)
+    else:
+        return get_name(city_b)
+    
 
 
 # Q5: Don't violate the abstraction barrier!
@@ -188,7 +193,15 @@ def berry_finder(t):
     >>> berry_finder(t)
     True
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return label(t) == 'berry'
+    if label(t) == 'berry':
+        return True
+    for b in branches(t):
+        if berry_finder(b):
+            return True
+    return False
+
 
 
 # Q7: Sprout Leaves
@@ -225,7 +238,15 @@ def sprout_leaves(t, leaves):
           1
           2
     """
-    "*** YOUR CODE HERE ***"
+    new_branches = []
+    if is_leaf(t):
+        for i in leaves:
+            new_branches.append(tree(i))
+    else:
+        for b in branches(t):
+            new_branches.append(sprout_leaves(b, leaves))
+    return tree(label(t), new_branches)
+    
 
 
 # Abstraction tests for sprout_leaves and berry_finder
