@@ -196,6 +196,11 @@ def replace_loki_at_leaf(t, lokis_replacement):
     >>> laerad == yggdrasil # Make sure original tree is unmodified
     True
     """
+    # if not is_tree:
+    #     return False
+    if is_leaf(t):
+        return tree(lokis_replacement if label(t) == 'loki' else label(t)) 
+    return tree(label(t), [replace_loki_at_leaf(branch, lokis_replacement)for branch in branches(t)])
     
 
 
@@ -230,7 +235,12 @@ def has_path(t, word):
     False
     """
     assert len(word) > 0, 'no path for empty word.'
-    "*** YOUR CODE HERE ***"
+
+    if len(word) == 1:
+        return label(t) == word[0]
+    return label(t) == word[0] and any([has_path(branch, word[1:])for branch in branches(t)])
+    
+
 
 
 def preorder(t):
@@ -243,7 +253,7 @@ def preorder(t):
     >>> preorder(tree(2, [tree(4, [tree(6)])]))
     [2, 4, 6]
     """
-    "*** YOUR CODE HERE ***"
+    
 
 
 def str_interval(x):
@@ -301,7 +311,9 @@ def mul_interval(x, y):
 def sub_interval(x, y):
     """Return the interval that contains the difference between any value in x
     and any value in y."""
-    "*** YOUR CODE HERE ***"
+    lower = lower_bound(x) - lower_bound(y)
+    upper = upper_bound(x) - upper_bound(y)
+    return interval(lower, upper)
 
 
 def div_interval(x, y):
