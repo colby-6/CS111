@@ -9,6 +9,9 @@ import random
 # Q2: Making Cards
 class Card:
     cardtype = "Staff"
+    name = ''
+    attack = 0
+    defense = 0
 
     def __init__(self, name, attack, defense):
         """
@@ -47,7 +50,8 @@ class Card:
         >>> third_card.power(staff_member)
         50.0
         """
-        "*** YOUR CODE HERE ***"
+        return self.attack - (opponent_card.defense) /2
+        
 
     def effect(self, opponent_card, player, opponent):
         """
@@ -74,6 +78,10 @@ class Card:
 
 # Q3: Making a Player
 class Player:
+    deck = []
+    hand = []
+    name = ''
+
     def __init__(self, deck, name):
         """Initialize a Player object.
         A Player starts the game by drawing 5 cards from their deck. Each turn,
@@ -88,7 +96,9 @@ class Player:
         """
         self.deck = deck
         self.name = name
-        "*** YOUR CODE HERE ***"
+        self.hand = []
+        for i in range(5):
+            self.draw()
 
     def draw(self):
         """Draw a card from the player's deck and add it to their hand.
@@ -102,7 +112,7 @@ class Player:
         6
         """
         assert not self.deck.is_empty(), "Deck is empty!"
-        "*** YOUR CODE HERE ***"
+        self.hand.append(self.deck.draw())
 
     def play(self, card_index):
         """Remove and return a card from the player's hand at the given index.
@@ -118,7 +128,7 @@ class Player:
         >>> len(test_player.hand)
         2
         """
-        "*** YOUR CODE HERE ***"
+        return self.hand.pop(card_index)
 
     def display_hand(self):
         """
