@@ -35,7 +35,41 @@ class VendingMachine:
     >>> w.vend()
     'Here is your soda.'
     """
-    "*** YOUR CODE HERE ***"
+    stocks = 0 
+    balance = 0 
+
+    def __init__(self, p_name, p_price):
+        self.p_name = p_name
+        self. p_price = p_price
+    
+
+    def vend(self):
+        if (self.stocks == 0):
+            print(f"'Nothing left to vend. Please restock.'")
+        elif (self.balance < self.p_price):
+            print(f"'You must add ${self.p_price - self.balance} more funds.'")
+        elif (self.balance == self.p_price):
+            print(f"'Here is your {self.p_name}.'")
+            self.balance -= self.p_price
+            self.stocks -= 1
+        else:
+            print(f"'Here is your {self.p_name} and ${self.balance - self.p_price} change.'")
+            self.balance = 0
+            self.stocks -= 1
+
+    def add_funds(self, funds):
+        self.balance += funds
+        if (self.stocks == 0):
+            print(f"'Nothing left to vend. Please restock. Here is your ${self.balance}.'")
+            self.balance = 0
+        else:
+            print(f"'Current balance: ${self.balance}'")
+
+    def restock(self, stock):
+        self.stocks += stock
+        print(f"'Current {self.p_name} stock: {self.stocks}'")
+
+        
 
 
 class Mint:
@@ -73,10 +107,10 @@ class Mint:
         self.update()
 
     def create(self, kind):
-        "*** YOUR CODE HERE ***"
+        return kind(self.year)
 
     def update(self):
-        "*** YOUR CODE HERE ***"
+        self.year = self.present_year
 
 
 class Coin:
@@ -84,7 +118,10 @@ class Coin:
         self.year = year
 
     def worth(self):
-        "*** YOUR CODE HERE ***"
+        if Mint.present_year == self.year:
+            return self.cents
+        else:
+            return self.cents + (Mint.present_year - self.year - 50)
 
 
 class Nickel(Coin):
@@ -111,7 +148,11 @@ def store_digits(n):
     >>> print("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
     >>> link1 = Link(3, Link(Link(4), Link(5, Link(6))))
     """
-    "*** YOUR CODE HERE ***"
+    result = Link.empty
+    while n > 0:
+        result = Link(n%10, result)
+        n = n // 10
+    return result
 
 
 def deep_map_mut(fn, link):
@@ -131,7 +172,13 @@ def deep_map_mut(fn, link):
     >>> print(link1)
     <9 <16> 25 36>
     """
-    "*** YOUR CODE HERE ***"
+    if link is Link.empty:
+            return
+    elif isinstance(link.first, Link):
+        deep_map_mut(fn, link.first) 
+    else:
+        link.first = fn(link.first)
+    deep_map_mut(fn, link.rest)
 
 
 def two_list(vals, amounts):
@@ -153,8 +200,13 @@ def two_list(vals, amounts):
     >>> c
     Link(1, Link(1, Link(3, Link(3, Link(2)))))
     """
-    "*** YOUR CODE HERE ***"
-
+    vals.reverse()
+    amounts.reverse()
+    result = Link.empty
+    for i in range(len(vals)):
+        for j in range(amounts[i]):
+            result = Link(vals[i], result)
+    return result
 
 class VirFib():
     """A Virahanka Fibonacci number.
