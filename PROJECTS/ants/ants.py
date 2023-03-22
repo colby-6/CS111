@@ -190,7 +190,7 @@ class ThrowerAnt(Ant):
         next_place = self.place
         while not next_place.is_hive():
             if next_place.bees:
-                return bee_selector(next_place.bees)
+                return random_bee(next_place.bees)
             next_place = next_place.entrance
         return None
         # END Problem 3 and 4
@@ -298,7 +298,7 @@ class HungryAnt(Ant):
 
     def action(self, gamestate):
         if self.chewing == 0 and self.place.bees[:]:
-            selected_bee = bee_selector(self.place.bees)
+            selected_bee = random_bee(self.place.bees)
             selected_bee.health = 0 
             selected_bee.reduce_health(0)
             self.chewing - self.chew_time
@@ -320,12 +320,14 @@ class ContainerAnt(Ant):
 
     def can_contain(self, other):
         # BEGIN Problem 8
-        "*** YOUR CODE HERE ***"
+        if self.ant_contained is None and not other.is_container():
+            return True
+        return False
         # END Problem 8
 
     def store_ant(self, ant):
         # BEGIN Problem 8
-        "*** YOUR CODE HERE ***"
+        self.ant_contained = ant
         # END Problem 8
 
     def remove_ant(self, ant):
@@ -345,7 +347,8 @@ class ContainerAnt(Ant):
 
     def action(self, gamestate):
         # BEGIN Problem 8
-        "*** YOUR CODE HERE ***"
+        if self.ant_contained:
+            self.ant_contained.action(gamestate)
         # END Problem 8
 
 
