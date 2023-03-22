@@ -461,7 +461,9 @@ class QueenAnt(ScubaThrower):  # You should change this line did it :)
         remaining, signal the end of the game.
         """
         # BEGIN Problem 12
-        "*** YOUR CODE HERE ***"
+        self.health =- amount
+        if self.health <= 0:
+            ants_lose()
         # END Problem 12
 
 
