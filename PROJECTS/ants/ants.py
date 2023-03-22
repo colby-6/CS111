@@ -195,7 +195,7 @@ class ThrowerAnt(Ant):
         next_place = self.place
         while not next_place.is_hive():
             if next_place.bees:
-                return bee_selector(next_place.bees)
+                return random_bee(next_place.bees)
             next_place = next_place.entrance
         return None
         # END Problem 3 and 4
@@ -303,7 +303,7 @@ class HungryAnt(Ant):
 
     def action(self, gamestate):
         if self.chewing == 0 and self.place.bees[:]:
-            selected_bee = bee_selector(self.place.bees)
+            selected_bee = random_bee(self.place.bees)
             selected_bee.health = 0 
             selected_bee.reduce_health(0)
             self.chewing - self.chew_time
